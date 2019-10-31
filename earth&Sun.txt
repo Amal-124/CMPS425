@@ -1,0 +1,30 @@
+var scene = new THREE.Scene();
+var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+
+var renderer = new THREE.WebGLRenderer();
+renderer.setSize( window.innerWidth, window.innerHeight );
+document.body.appendChild( renderer.domElement );
+//object 1
+var geometry = new THREE.SphereGeometry( 1, 35, 35 );
+var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+var sun = new THREE.Mesh( geometry, material );
+scene.add( sun );
+// object 2
+var geometry = new THREE.SphereGeometry( 0.5, 100, 70 );
+var material = new THREE.MeshBasicMaterial( { color: 0x00fff0 } );
+var earth = new THREE.Mesh( geometry, material );
+scene.add( earth );
+
+
+
+camera.position.z = 6;
+earth.position.x = 3;
+var animate = function () {
+	requestAnimationFrame( animate );
+	sun.rotation.y += 0.12;
+  earth.rotation.y+= 0.1;
+  scene.rotation.y+= 0.02;
+	renderer.render( scene, camera );
+};
+
+animate();
