@@ -1,477 +1,726 @@
-<!doctype html> 
+<!doctype html>
 
-<html> 
+<html>
 
-   <body> 
+   <body>
 
-      <canvas width = "570" height = "570" id = "my_Canvas"></canvas> 
+      <canvas width = "570" height = "570" id = "my_Canvas"></canvas>
 
- 
- 
 
-      <script> 
 
-         /*============= Creating a canvas ======================*/ 
 
-         var canvas = document.getElementById('my_Canvas'); 
+      <script>
 
-         gl = canvas.getContext('experimental-webgl'); 
+         /*============= Creating a canvas ======================*/
 
-         /*========== Defining and storing the geometry ==========*/ 
+         var canvas = document.getElementById('my_Canvas');
 
-         var vertices = [ 
+         gl = canvas.getContext('experimental-webgl');
 
-         ////////// points of req    
+         /*========== Defining and storing the geometry ==========*/
 
-            -3,2,0,   //V0 v4 
+         var vertices = [
 
-            3,2,0,    //V1 v5 
+         ////////// points of req   
 
-            -3,-2,0,  //v2 v6 
+            -3,2,0,   //V0 v4
 
-            3,-2,0,   //v3 v7 
+            3,2,0,    //V1 v5
 
-        ////////// opposite points of req 
+            -3,-2,0,  //v2 v6
 
-            -3,2,-4, //V4 
+            3,-2,0,   //v3 v7
 
-             3,2,-4, //V5 
+        ////////// opposite points of req
 
-            -3,-2,-4, //v6 
+            -3,2,-4, //V4
 
-             3,-2,-4, //v7 
+             3,2,-4, //V5
 
-         ////////// pyramid 1 
+            -3,-2,-4, //v6
 
-               -1.5,1,0,  //v8 
+             3,-2,-4, //v7
 
-                1.5,1,0,  //v9  
+         ////////// pyramid 1
 
-                -1.5,-1,0,  //v10 
+               -1.5,1,0,  //v8
 
-                1.5,-1,0,  //v11 
+                1.5,1,0,  //v9 
 
-                0,0,0, //v12 summit 
+                -1.5,-1,0,  //v10
 
-                0,0,3, //  v13 sumiit 2 
+                1.5,-1,0,  //v11
 
-         ////////// pyramid 2 
+                0,0,0, //v12 summit
 
-               -1.5,1,-4,  //v14 
+                0,0,3, //  v13 sumiit 2
 
-                1.5,1,-4,  //v15  
+         ////////// pyramid 2
 
-                -1.5,-1,-4,  //v16 
+               -1.5,1,-4,  //v14
 
-                1.5,-1,-4,  //v17 
+                1.5,1,-4,  //v15 
 
-                0,0,0, //v18 summit 
+                -1.5,-1,-4,  //v16
 
-                0,0,-7, //  v19 sumiit 2 
+                1.5,-1,-4,  //v17
 
-         ////////// small sq1 
+                0,0,0, //v18 summit
 
-               5,0.5,-1.5, //v20 
+                0,0,-7, //  v19 sumiit 2
 
-               6,0.5,-1.5, //v21 
+         ////////// small sq1
 
-               5,-0.5,-1.5, //v22 
+               5,0.5,-1.5, //v20
 
-               6,-0.5,-1.5, //v23    
+               6,0.5,-1.5, //v21
 
-         ////////// small sq1 oppsite 
+               5,-0.5,-1.5, //v22
 
-               5,0.5,-2.5, //v24 
+               6,-0.5,-1.5, //v23   
 
-               6,0.5,-2.5, //v25 
+         ////////// small sq1 oppsite
 
-               5,-0.5,-2.5, //v26 
+               5,0.5,-2.5, //v24
 
-               6,-0.5,-2.5, //v27  
+               6,0.5,-2.5, //v25
 
-         ////////// small sq2 
+               5,-0.5,-2.5, //v26
 
-                -5,0.5,-1.5, //v28 
+               6,-0.5,-2.5, //v27 
 
-               -6,0.5,-1.5, //v29 
+         ////////// small sq2
 
-               -5,-0.5,-1.5, //v30 
+                -5,0.5,-1.5, //v28
 
-               -6,-0.5,-1.5, //v31    
+               -6,0.5,-1.5, //v29
 
-         ////////// small sq2 oppsite 
+               -5,-0.5,-1.5, //v30
 
-               -5,0.5,-2.5, //v32 
+               -6,-0.5,-1.5, //v31   
 
-               -6,0.5,-2.5, //v33 
+         ////////// small sq2 oppsite
 
-               -5,-0.5,-2.5, //v34 
+               -5,0.5,-2.5, //v32
 
-               -6,-0.5,-2.5, //v35  
-         ////////// pyramid 2 
+               -6,0.5,-2.5, //v33
 
-               -1.5,1,-4,  //v14 
+               -5,-0.5,-2.5, //v34
 
-                1.5,1,-4,  //v15  
+               -6,-0.5,-2.5, //v35 
 
-                -1.5,-1,-4,  //v16 
+         ///////////  pyramid 3
 
-                1.5,-1,-4,  //v17 
+                 3,2,0,   //v36 -1
 
-                0,0,0, //v18 summit 
+                 3,2,-4,   //v37 -5
 
-                0,0,-7, //  v19 sumiit 2 
-               
+                 3,-2,0,    //v38 -3
 
- 
- 
+                 3,-2,-4,   //v39 -7
+
+                 5,0,0,//v40 summit
+
+                 5,0,-2,//  v41 sumiit 2 
+
+        ///////////  pyramid 3
+
+                -3,2,0,   //v42 -0
+
+                -3,2,-4,   //v43 -4
+
+                -3,-2,0,    //v44 -2
+
+                -3,-2,-4,   //v45 -6
+
+                 -5,0,0,//v46 summit
+
+                 -5,0,-2,//47  v41 sumiit 2 
+
+
+
+
+           
+
+         ];
+
+         var colors = [
 
             
 
-         ]; 
+            0.9,0.6,0.6, 0,1,0.8 , 0.9,0.6,0.6, 0.9,0.6,0.6, 1,1,0, 1,1,0, 1,1,0,
 
-         var colors = [ 
+            0.9,0.6,0.6, 0.9,0.6,0.6, 0.9,0.6,0.6, 0.9,0.6,0.6, 5,3,7,  0,1,0.8 ,  5,3,7, 1,1,3, 5,3,7, 1,1,3,
 
-             
+            1,1,3, 5,3,7, 1,1,3, 1,1,3, 1,1,0, 1,1,0, 1,1,0, 0,1,0.8, 1,1,3, 0,1,0.8 , 1,1,0, 1,1,0, 1,1,0, 0.9,0.6,0.6, 0.9,0.6,0.6, 0.9,0.6,0.6, 0.9,0.6,0.6, 0.9,0.6,0.6, 5,3,7, 1,1,3, 5,3,7, 1,1,3,
 
-            0.9,0.6,0.6, 0,1,0.8 , 0.9,0.6,0.6, 0.9,0.6,0.6, 1,1,0, 1,1,0, 1,1,0, 
+            1,1,3, 5,3,7, 1,6,3, 1,3,3,0.9,0.8,0.6, 0,1,0.8 , 0.9,0.6,0.6, 0.9,0.6,0.6, 0.9,0.6,0.6, 0.9,0.6,0.6,
 
-            0.9,0.6,0.6, 0.9,0.6,0.6, 0.9,0.6,0.6, 0.9,0.6,0.6, 5,3,7,  0,1,0.8 ,  5,3,7, 1,1,3, 5,3,7, 1,1,3, 
+            0.9,0.6,0.6, 0.9,0.6,0.6, 0,1,0.8,  0.9,0.6,0.6, 1,1,0, 1,1,0, 1,6,3, 0.9,0.6,0.6, 0.9,0.6,0.6, 1,1,0, 1,1,0, 0.9,0.6,0.6, 1,1,0, 0.9,0.6,0.6, 0.9,0.6,0.6,0,1,0.8,1,1,3, 1,1,0, 0.9,0.6,0.6, 1,1,0, 0.9,0.6,0.6, 0.9,0.6,0.6,0,1,0.8,1,1,3,];
 
-            1,1,3, 5,3,7, 1,1,3, 1,1,3, 1,1,0, 1,1,0, 1,1,0, 0,1,0.8, 1,1,3, 0,1,0.8 , 1,1,0, 1,1,0, 1,1,0, 0.9,0.6,0.6, 0.9,0.6,0.6, 0.9,0.6,0.6, 0.9,0.6,0.6, 0.9,0.6,0.6, 5,3,7, 1,1,3, 5,3,7, 1,1,3, 
 
-            1,1,3, 5,3,7, 1,6,3, 1,3,3,0.9,0.8,0.6, 0,1,0.8 , 0.9,0.6,0.6, 0.9,0.6,0.6, 0.9,0.6,0.6, 0.9,0.6,0.6, 
 
-            0.9,0.6,0.6, 0.9,0.6,0.6, 0,1,0.8,  0.9,0.6,0.6, 1,1,0, 1,1,0, 1,6,3, 0.9,0.6,0.6, 0.9,0.6,0.6, 1,1,0, 1,1,0, 0.9,0.6,0.6, 1,1,0, 0.9,0.6,0.6, 0.9,0.6,0.6,0,1,0.8,1,1,3, ]; 
 
- 
- 
- 
 
-         var indices = [1,0,2, 1,2,3, 0,4,1, 1,5,4, 1,3,5, 5,7,3, 0,2,4, 4,6,2, 4,6,5, 5,7,6, 2,3,7, 7,6,2, 
 
-                        8,10,11, 8,9,11,  8,10,13, 8,9,13, 9,11,13, 10,11,13, 
 
-                        14,16,15, 15,16,17, 14,16,19, 14,15,19, 15,17,19, 16,17,19, 
+         var indices = [1,0,2, 1,2,3, 0,4,1, 1,5,4, 1,3,5, 5,7,3, 0,2,4, 4,6,2, 4,6,5, 5,7,6, 2,3,7, 7,6,2,
 
-                        20,21,22, 22,23,21,   24,25,26, 26,27,25, 20,22,26, 20,24,26, 20,24,25, 20,21,25, 23,21,27, 27,25,21, 22,23,27, 27,26,22, 
+                        8,10,11, 8,9,11,  8,10,13, 8,9,13, 9,11,13, 10,11,13,
 
-                        28,29,30, 30,31,29,   32,33,34, 34,35,33, 28,30,34, 28,32,34, 28,32,33, 28,29,33, 31,29,35, 35,33,29, 30,31,35, 35,34,30, 
+                        14,16,15, 15,16,17, 14,16,19, 14,15,19, 15,17,19, 16,17,19,
 
-        ]; 
+                        20,21,22, 22,23,21,   24,25,26, 26,27,25, 20,22,26, 20,24,26, 20,24,25, 20,21,25, 23,21,27, 27,25,21, 22,23,27, 27,26,22,
 
- 
- 
- 
- 
- 
+                        28,29,30, 30,31,29,   32,33,34, 34,35,33, 28,30,34, 28,32,34, 28,32,33, 28,29,33, 31,29,35, 35,33,29, 30,31,35, 35,34,30,
 
-         // Create and store data into vertex buffer 
+                        36,37,39, 36,38,39,   36,37,41, 37,39,41, 38,39,41, 36,38,41,
 
-         var vertex_buffer = gl.createBuffer (); 
+                                              42,43,47, 43,45,47, 45,44,47, 44,42,47,
 
-         gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer); 
+        ];
 
-         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW); 
 
-         // Create and store data into color buffer 
 
-         var color_buffer = gl.createBuffer (); 
 
-         gl.bindBuffer(gl.ARRAY_BUFFER, color_buffer); 
 
-         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW); 
 
-         // Create and store data into index buffer 
 
-         var index_buffer = gl.createBuffer (); 
 
-         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, index_buffer); 
 
-         gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW); 
 
-         /*=================== SHADERS =================== */ 
 
-         var vertCode = 'attribute vec3 position;'+ 
 
-            'uniform mat4 Pmatrix;'+ 
 
-            'uniform mat4 Vmatrix;'+ 
+         // Create and store data into vertex buffer
 
-            'uniform mat4 Mmatrix;'+ 
+         var vertex_buffer = gl.createBuffer ();
 
-            'attribute vec3 color;'+//the color of the point 
+         gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
 
-            'varying vec3 vColor;'+ 
+         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 
-            'void main(void) { '+//pre-built function 
+         // Create and store data into color buffer
 
-               'gl_Position = Pmatrix*Vmatrix*Mmatrix*vec4(position, 2.);'+ //where we change the cordinates. 
+         var color_buffer = gl.createBuffer ();
 
-               'vColor = color;'+ 
+         gl.bindBuffer(gl.ARRAY_BUFFER, color_buffer);
 
-            '}'; 
+         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
 
-         var fragCode = 'precision mediump float;'+ 
+         // Create and store data into index buffer
 
-            'varying vec3 vColor;'+ 
+         var index_buffer = gl.createBuffer ();
 
-            'void main(void) {'+ 
+         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, index_buffer);
 
-               'gl_FragColor = vec4(vColor, 1.);'+ 
+         gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
 
-            '}'; 
+         /*=================== SHADERS =================== */
 
-         var vertShader = gl.createShader(gl.VERTEX_SHADER); 
+         var vertCode = 'attribute vec3 position;'+
 
-         gl.shaderSource(vertShader, vertCode); 
+            'uniform mat4 Pmatrix;'+
 
-         gl.compileShader(vertShader); 
+            'uniform mat4 Vmatrix;'+
 
-         var fragShader = gl.createShader(gl.FRAGMENT_SHADER); 
+            'uniform mat4 Mmatrix;'+
 
-         gl.shaderSource(fragShader, fragCode); 
+            'attribute vec3 color;'+//the color of the point
 
-         gl.compileShader(fragShader); 
+            'varying vec3 vColor;'+
 
-         var shaderprogram = gl.createProgram(); 
+            'void main(void) { '+//pre-built function
 
-         gl.attachShader(shaderprogram, vertShader); 
+               'gl_Position = Pmatrix*Vmatrix*Mmatrix*vec4(position, 2.);'+ //where we change the cordinates.
 
-         gl.attachShader(shaderprogram, fragShader); 
+               'vColor = color;'+
 
-         gl.linkProgram(shaderprogram); 
+            '}';
 
-         /*======== Associating attributes to vertex shader =====*/ 
+         var fragCode = 'precision mediump float;'+
 
-         var _Pmatrix = gl.getUniformLocation(shaderprogram, "Pmatrix"); 
+            'varying vec3 vColor;'+
 
-         var _Vmatrix = gl.getUniformLocation(shaderprogram, "Vmatrix"); 
+            'void main(void) {'+
 
-         var _Mmatrix = gl.getUniformLocation(shaderprogram, "Mmatrix"); 
+               'gl_FragColor = vec4(vColor, 1.);'+
 
-         gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer); 
+            '}';
 
-         var _position = gl.getAttribLocation(shaderprogram, "position"); 
+         var vertShader = gl.createShader(gl.VERTEX_SHADER);
 
-         gl.vertexAttribPointer(_position, 3, gl.FLOAT, false,0,0); 
+         gl.shaderSource(vertShader, vertCode);
 
-         gl.enableVertexAttribArray(_position); 
+         gl.compileShader(vertShader);
 
-         gl.bindBuffer(gl.ARRAY_BUFFER, color_buffer); 
+         var fragShader = gl.createShader(gl.FRAGMENT_SHADER);
 
-         var _color = gl.getAttribLocation(shaderprogram, "color"); 
+         gl.shaderSource(fragShader, fragCode);
 
-         gl.vertexAttribPointer(_color, 3, gl.FLOAT, false,0,0) ; 
+         gl.compileShader(fragShader);
 
-         gl.enableVertexAttribArray(_color); 
+         var shaderprogram = gl.createProgram();
 
-         gl.useProgram(shaderprogram); 
+         gl.attachShader(shaderprogram, vertShader);
 
-         /*==================== MATRIX ====================== */ 
+         gl.attachShader(shaderprogram, fragShader);
 
-         function get_projection(angle, a, zMin, zMax) { 
+         gl.linkProgram(shaderprogram);
 
-            var ang = Math.tan((angle*.5)*Math.PI/180);//angle*.5 
+         /*======== Associating attributes to vertex shader =====*/
 
-            return [ 
+         var _Pmatrix = gl.getUniformLocation(shaderprogram, "Pmatrix");
 
-               0.5/ang, 0 , 0, 0, 
+         var _Vmatrix = gl.getUniformLocation(shaderprogram, "Vmatrix");
 
-               0, 0.5*a/ang, 0, 0, 
+         var _Mmatrix = gl.getUniformLocation(shaderprogram, "Mmatrix");
 
-               0, 0, -(zMax+zMin)/(zMax-zMin), -1, 
+         gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
 
-               0, 0, (-2*zMax*zMin)/(zMax-zMin), 0  
+         var _position = gl.getAttribLocation(shaderprogram, "position");
 
-            ]; 
+         gl.vertexAttribPointer(_position, 3, gl.FLOAT, false,0,0);
 
-         } 
+         gl.enableVertexAttribArray(_position);
 
-         var proj_matrix = get_projection(40, canvas.width/canvas.height, 1, 100); 
+         gl.bindBuffer(gl.ARRAY_BUFFER, color_buffer);
 
-         var mo_matrix = [ 1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1 ]; 
+         var _color = gl.getAttribLocation(shaderprogram, "color");
 
-         var view_matrix = [ 1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1 ]; 
+         gl.vertexAttribPointer(_color, 3, gl.FLOAT, false,0,0) ;
 
-         view_matrix[14] = view_matrix[14]-6; 
+         gl.enableVertexAttribArray(_color);
 
-         /*================= Mouse events ======================*/ 
+         gl.useProgram(shaderprogram);
 
-         var AMORTIZATION = 0.95; 
+         /*==================== MATRIX ====================== */
 
-         var drag = false; 
+         function get_projection(angle, a, zMin, zMax) {
 
-         var old_x, old_y; 
+            var ang = Math.tan((angle*.5)*Math.PI/180);//angle*.5
 
-         var dX = 0, dY = 0; 
+            return [
 
-         var mouseDown = function(e) { 
+               0.5/ang, 0 , 0, 0,
 
-            drag = true; 
+               0, 0.5*a/ang, 0, 0,
 
-            old_x = e.pageX, old_y = e.pageY; 
+               0, 0, -(zMax+zMin)/(zMax-zMin), -1,
 
-            e.preventDefault(); 
+               0, 0, (-2*zMax*zMin)/(zMax-zMin), 0 
 
-            return false; 
+            ];
 
-         }; 
+         }
 
-         var mouseUp = function(e){ 
+         var proj_matrix = get_projection(40, canvas.width/canvas.height, 1, 100);
 
-            drag = false; 
+         var mo_matrix = [ 1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1 ];
 
-         }; 
+         var view_matrix = [ 1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1 ];
 
-         var mouseMove = function(e) { 
+         view_matrix[14] = view_matrix[14]-6;
 
-            if (!drag) return false; 
+         /*================= Mouse events ======================*/
 
-            dX = (e.pageX-old_x)*2*Math.PI/canvas.width, 
+         var AMORTIZATION = 0.95;
 
-            dY = (e.pageY-old_y)*2*Math.PI/canvas.height; 
+         var drag = false;
 
-            THETA+= dX; 
+         var old_x, old_y;
 
-            PHI+=dY; 
+         var dX = 0, dY = 0;
 
-            old_x = e.pageX, old_y = e.pageY; 
+         var mouseDown = function(e) {
 
-            e.preventDefault(); 
+            drag = true;
 
-         }; 
+            old_x = e.pageX, old_y = e.pageY;
 
-         canvas.addEventListener("mousedown", mouseDown, false); 
+            e.preventDefault();
 
-         canvas.addEventListener("mouseup", mouseUp, false); 
+            return false;
 
-         canvas.addEventListener("mouseout", mouseUp, false); 
+         };
 
-         canvas.addEventListener("mousemove", mouseMove, false); 
+         var mouseUp = function(e){
 
-         /*=========================rotation================*/ 
+            drag = false;
 
-         function rotateX(m, angle) { 
+         };
 
-            var c = Math.cos(angle); 
+         var mouseMove = function(e) {
 
-            var s = Math.sin(angle); 
+            if (!drag) return false;
 
-            var mv1 = m[1], mv5 = m[5], mv9 = m[9]; 
+            dX = (e.pageX-old_x)*2*Math.PI/canvas.width,
 
-            m[1] = m[1]*c-m[2]*s; 
+            dY = (e.pageY-old_y)*2*Math.PI/canvas.height;
 
-            m[5] = m[5]*c-m[6]*s; 
+            THETA+= dX;
 
-            m[9] = m[9]*c-m[10]*s; 
+            PHI+=dY;
 
-            m[2] = m[2]*c+mv1*s; 
+            old_x = e.pageX, old_y = e.pageY;
 
-            m[6] = m[6]*c+mv5*s; 
+            e.preventDefault();
 
-            m[10] = m[10]*c+mv9*s; 
+         };
 
-         } 
+         canvas.addEventListener("mousedown", mouseDown, false);
 
-         function rotateY(m, angle) { 
+         canvas.addEventListener("mouseup", mouseUp, false);
 
-            var c = Math.cos(angle); 
+         canvas.addEventListener("mouseout", mouseUp, false);
 
-            var s = Math.sin(angle); 
+         canvas.addEventListener("mousemove", mouseMove, false);
 
-            var mv0 = m[0], mv4 = m[4], mv8 = m[8]; 
+         /*=========================rotation================*/
 
-            m[0] = c*m[0]+s*m[2]; 
+         function rotateX(m, angle) {
 
-            m[4] = c*m[4]+s*m[6]; 
+            var c = Math.cos(angle);
 
-            m[8] = c*m[8]+s*m[10]; 
+            var s = Math.sin(angle);
 
-            m[2] = c*m[2]-s*mv0; 
+            var mv1 = m[1], mv5 = m[5], mv9 = m[9];
 
-            m[6] = c*m[6]-s*mv4; 
+            m[1] = m[1]*c-m[2]*s;
 
-            m[10] = c*m[10]-s*mv8; 
+            m[5] = m[5]*c-m[6]*s;
 
-         } 
+            m[9] = m[9]*c-m[10]*s;
 
-         /*=================== Drawing =================== */ 
+            m[2] = m[2]*c+mv1*s;
 
-         var THETA = 0, 
+            m[6] = m[6]*c+mv5*s;
 
-         PHI = 0; 
+            m[10] = m[10]*c+mv9*s;
 
-         var time_old = 0; 
+         }
 
-         var animate = function(time) { 
+         function rotateY(m, angle) {
 
-            var dt = time-time_old; 
+            var c = Math.cos(angle);
 
-            if (!drag) { 
+            var s = Math.sin(angle);
 
-               dX *= AMORTIZATION, dY*=AMORTIZATION; 
+            var mv0 = m[0], mv4 = m[4], mv8 = m[8];
 
-               THETA+=dX, PHI+=dY; 
+            m[0] = c*m[0]+s*m[2];
 
-            } 
+            m[4] = c*m[4]+s*m[6];
 
-            //set model matrix to I4 
+            m[8] = c*m[8]+s*m[10];
 
-            mo_matrix[0] = 1, mo_matrix[1] = 0, mo_matrix[2] = 0, 
+            m[2] = c*m[2]-s*mv0;
 
-            mo_matrix[3] = 0, 
+            m[6] = c*m[6]-s*mv4;
 
-            mo_matrix[4] = 0, mo_matrix[5] = 1, mo_matrix[6] = 0, 
+            m[10] = c*m[10]-s*mv8;
 
-            mo_matrix[7] = 0, 
+         }
 
-            mo_matrix[8] = 0, mo_matrix[9] = 0, mo_matrix[10] = 1, 
+         /*=================== Drawing =================== */
 
-            mo_matrix[11] = 0, 
+         var THETA = 0,
 
-            mo_matrix[12] = 0, mo_matrix[13] = 0, mo_matrix[14] = 0, 
+         PHI = 0;
 
-            mo_matrix[15] = 1; 
+         var time_old = 0;
 
-            rotateY(mo_matrix, THETA); 
+         var animate = function(time) {
 
-            rotateX(mo_matrix, PHI); 
+            var dt = time-time_old;
 
-            time_old = time;  
+            if (!drag) {
 
-            gl.enable(gl.DEPTH_TEST); 
+               dX *= AMORTIZATION, dY*=AMORTIZATION;
 
-            // gl.depthFunc(gl.LEQUAL); 
+               THETA+=dX, PHI+=dY;
 
-            gl.clearColor(0.5, 0.5, 0.5, 0.9); 
+            }
 
-            gl.clearDepth(1.0); 
+            //set model matrix to I4
 
-            gl.viewport(0.0, 0.0, canvas.width, canvas.height); 
+            mo_matrix[0] = 1, mo_matrix[1] = 0, mo_matrix[2] = 0,
 
-            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT); 
+            mo_matrix[3] = 0,
 
-            gl.uniformMatrix4fv(_Pmatrix, false, proj_matrix); 
+            mo_matrix[4] = 0, mo_matrix[5] = 1, mo_matrix[6] = 0,
 
-            gl.uniformMatrix4fv(_Vmatrix, false, view_matrix); 
+            mo_matrix[7] = 0,
 
-            gl.uniformMatrix4fv(_Mmatrix, false, mo_matrix); 
+            mo_matrix[8] = 0, mo_matrix[9] = 0, mo_matrix[10] = 1,
 
-            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, index_buffer); 
+            mo_matrix[11] = 0,
 
-            gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0); 
+            mo_matrix[12] = 0, mo_matrix[13] = 0, mo_matrix[14] = 0,
 
-            window.requestAnimationFrame(animate); 
+            mo_matrix[15] = 1;
 
-         } 
+            rotateY(mo_matrix, THETA);
 
-         animate(0); 
+            rotateX(mo_matrix, PHI);
 
-      </script> 
+            time_old = time; 
 
-   </body> 
+            gl.enable(gl.DEPTH_TEST);
+
+            // gl.depthFunc(gl.LEQUAL);
+
+            gl.clearColor(0.5, 0.5, 0.5, 0.9);
+
+            gl.clearDepth(1.0);
+
+            gl.viewport(0.0, 0.0, canvas.width, canvas.height);
+
+            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+            gl.uniformMatrix4fv(_Pmatrix, false, proj_matrix);
+
+            gl.uniformMatrix4fv(_Vmatrix, false, view_matrix);
+
+            gl.uniformMatrix4fv(_Mmatrix, false, mo_matrix);
+
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, index_buffer);
+
+            gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
+
+            window.requestAnimationFrame(animate);
+
+         }
+
+         animate(0);
+
+      </script>
+
+   </body>
 
 </html> 
 
- 
+
+On Oct 29, 2019, at 9:29 PM, A201600321 <A201600321@du.edu.om> wrote:
+
+<!doctype html>
+<html>
+<body>
+<canvas width = "570" height = "570" id = "my_Canvas"></canvas>
+<script>
+/*============= Creating a canvas ======================*/
+var canvas = document.getElementById('my_Canvas');
+gl = canvas.getContext('experimental-webgl');
+/*========== Defining and storing the geometry ==========*/
+var vertices = [
+////////// points of req
+-3,2,0, //V0 v4
+3,2,0, //V1 v5
+-3,-2,0, //v2 v6
+3,-2,0, //v3 v7
+////////// opposite points of req
+-3,2,-4, //V4
+3,2,-4, //V5
+-3,-2,-4, //v6
+3,-2,-4, //v7
+////////// pyramid 1
+-1.5,1,0, //v8
+1.5,1,0, //v9
+-1.5,-1,0, //v10
+1.5,-1,0, //v11
+0,0,0, //v12 summit
+0,0,3, // v13 sumiit 2
+////////// pyramid 2
+-1.5,1,-4, //v14
+1.5,1,-4, //v15
+-1.5,-1,-4, //v16
+1.5,-1,-4, //v17
+0,0,0, //v18 summit
+0,0,-7, // v19 sumiit 2
+////////// small sq1
+5,0.5,-1.5, //v20
+6,0.5,-1.5, //v21
+5,-0.5,-1.5, //v22
+6,-0.5,-1.5, //v23
+////////// small sq1 oppsite
+5,0.5,-2.5, //v24
+6,0.5,-2.5, //v25
+5,-0.5,-2.5, //v26
+6,-0.5,-2.5, //v27
+////////// small sq2
+-5,0.5,-1.5, //v28
+-6,0.5,-1.5, //v29
+-5,-0.5,-1.5, //v30
+-6,-0.5,-1.5, //v31
+////////// small sq2 oppsite
+-5,0.5,-2.5, //v32
+-6,0.5,-2.5, //v33
+-5,-0.5,-2.5, //v34
+-6,-0.5,-2.5, //v35
+];
+var colors = [
+0.9,0.6,0.6, 0,1,0.8 , 0.9,0.6,0.6, 0.9,0.6,0.6, 1,1,0, 1,1,0, 1,1,0,
+0.9,0.6,0.6, 0.9,0.6,0.6, 0.9,0.6,0.6, 0.9,0.6,0.6, 5,3,7, 0,1,0.8 , 5,3,7, 1,1,3, 5,3,7, 1,1,3,
+1,1,3, 5,3,7, 1,1,3, 1,1,3, 1,1,0, 1,1,0, 1,1,0, 0,1,0.8, 1,1,3, 0,1,0.8 , 1,1,0, 1,1,0, 1,1,0, 0.9,0.6,0.6, 0.9,0.6,0.6, 0.9,0.6,0.6, 0.9,0.6,0.6, 0.9,0.6,0.6, 5,3,7, 1,1,3, 5,3,7, 1,1,3,
+1,1,3, 5,3,7, 1,6,3, 1,3,3,0.9,0.8,0.6, 0,1,0.8 , 0.9,0.6,0.6, 0.9,0.6,0.6, 0.9,0.6,0.6, 0.9,0.6,0.6,
+0.9,0.6,0.6, 0.9,0.6,0.6, 0,1,0.8, 0.9,0.6,0.6, 1,1,0, 1,1,0, 1,6,3, 0.9,0.6,0.6, 0.9,0.6,0.6, 1,1,0, 1,1,0, 0.9,0.6,0.6, 1,1,0, 0.9,0.6,0.6, 0.9,0.6,0.6,0,1,0.8,1,1,3, ];
+var indices = [1,0,2, 1,2,3, 0,4,1, 1,5,4, 1,3,5, 5,7,3, 0,2,4, 4,6,2, 4,6,5, 5,7,6, 2,3,7, 7,6,2,
+8,10,11, 8,9,11, 8,10,13, 8,9,13, 9,11,13, 10,11,13,
+14,16,15, 15,16,17, 14,16,19, 14,15,19, 15,17,19, 16,17,19,
+20,21,22, 22,23,21, 24,25,26, 26,27,25, 20,22,26, 20,24,26, 20,24,25, 20,21,25, 23,21,27, 27,25,21, 22,23,27, 27,26,22,
+28,29,30, 30,31,29, 32,33,34, 34,35,33, 28,30,34, 28,32,34, 28,32,33, 28,29,33, 31,29,35, 35,33,29, 30,31,35, 35,34,30,
+];
+// Create and store data into vertex buffer
+var vertex_buffer = gl.createBuffer ();
+gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+// Create and store data into color buffer
+var color_buffer = gl.createBuffer ();
+gl.bindBuffer(gl.ARRAY_BUFFER, color_buffer);
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
+// Create and store data into index buffer
+var index_buffer = gl.createBuffer ();
+gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, index_buffer);
+gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
+/*=================== SHADERS =================== */
+var vertCode = 'attribute vec3 position;'+
+'uniform mat4 Pmatrix;'+
+'uniform mat4 Vmatrix;'+
+'uniform mat4 Mmatrix;'+
+'attribute vec3 color;'+//the color of the point
+'varying vec3 vColor;'+
+'void main(void) { '+//pre-built function
+'gl_Position = Pmatrix*Vmatrix*Mmatrix*vec4(position, 2.);'+ //where we change the cordinates.
+'vColor = color;'+
+'}';
+var fragCode = 'precision mediump float;'+
+'varying vec3 vColor;'+
+'void main(void) {'+
+'gl_FragColor = vec4(vColor, 1.);'+
+'}';
+var vertShader = gl.createShader(gl.VERTEX_SHADER);
+gl.shaderSource(vertShader, vertCode);
+gl.compileShader(vertShader);
+var fragShader = gl.createShader(gl.FRAGMENT_SHADER);
+gl.shaderSource(fragShader, fragCode);
+gl.compileShader(fragShader);
+var shaderprogram = gl.createProgram();
+gl.attachShader(shaderprogram, vertShader);
+gl.attachShader(shaderprogram, fragShader);
+gl.linkProgram(shaderprogram);
+/*======== Associating attributes to vertex shader =====*/
+var _Pmatrix = gl.getUniformLocation(shaderprogram, "Pmatrix");
+var _Vmatrix = gl.getUniformLocation(shaderprogram, "Vmatrix");
+var _Mmatrix = gl.getUniformLocation(shaderprogram, "Mmatrix");
+gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+var _position = gl.getAttribLocation(shaderprogram, "position");
+gl.vertexAttribPointer(_position, 3, gl.FLOAT, false,0,0);
+gl.enableVertexAttribArray(_position);
+gl.bindBuffer(gl.ARRAY_BUFFER, color_buffer);
+var _color = gl.getAttribLocation(shaderprogram, "color");
+gl.vertexAttribPointer(_color, 3, gl.FLOAT, false,0,0) ;
+gl.enableVertexAttribArray(_color);
+gl.useProgram(shaderprogram);
+/*==================== MATRIX ====================== */
+function get_projection(angle, a, zMin, zMax) {
+var ang = Math.tan((angle*.5)*Math.PI/180);//angle*.5
+return [
+0.5/ang, 0 , 0, 0,
+0, 0.5*a/ang, 0, 0,
+0, 0, -(zMax+zMin)/(zMax-zMin), -1,
+0, 0, (-2*zMax*zMin)/(zMax-zMin), 0
+];
+}
+var proj_matrix = get_projection(40, canvas.width/canvas.height, 1, 100);
+var mo_matrix = [ 1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1 ];
+var view_matrix = [ 1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1 ];
+view_matrix[14] = view_matrix[14]-6;
+/*================= Mouse events ======================*/
+var AMORTIZATION = 0.95;
+var drag = false;
+var old_x, old_y;
+var dX = 0, dY = 0;
+var mouseDown = function(e) {
+drag = true;
+old_x = e.pageX, old_y = e.pageY;
+e.preventDefault();
+return false;
+};
+var mouseUp = function(e){
+drag = false;
+};
+var mouseMove = function(e) {
+if (!drag) return false;
+dX = (e.pageX-old_x)*2*Math.PI/canvas.width,
+dY = (e.pageY-old_y)*2*Math.PI/canvas.height;
+THETA+= dX;
+PHI+=dY;
+old_x = e.pageX, old_y = e.pageY;
+e.preventDefault();
+};
+canvas.addEventListener("mousedown", mouseDown, false);
+canvas.addEventListener("mouseup", mouseUp, false);
+canvas.addEventListener("mouseout", mouseUp, false);
+canvas.addEventListener("mousemove", mouseMove, false);
+/*=========================rotation================*/
+function rotateX(m, angle) {
+var c = Math.cos(angle);
+var s = Math.sin(angle);
+var mv1 = m[1], mv5 = m[5], mv9 = m[9];
+m[1] = m[1]*c-m[2]*s;
+m[5] = m[5]*c-m[6]*s;
+m[9] = m[9]*c-m[10]*s;
+m[2] = m[2]*c+mv1*s;
+m[6] = m[6]*c+mv5*s;
+m[10] = m[10]*c+mv9*s;
+}
+function rotateY(m, angle) {
+var c = Math.cos(angle);
+var s = Math.sin(angle);
+var mv0 = m[0], mv4 = m[4], mv8 = m[8];
+m[0] = c*m[0]+s*m[2];
+m[4] = c*m[4]+s*m[6];
+m[8] = c*m[8]+s*m[10];
+m[2] = c*m[2]-s*mv0;
+m[6] = c*m[6]-s*mv4;
+m[10] = c*m[10]-s*mv8;
+}
+/*=================== Drawing =================== */
+var THETA = 0,
+PHI = 0;
+var time_old = 0;
+var animate = function(time) {
+var dt = time-time_old;
+if (!drag) {
+dX *= AMORTIZATION, dY*=AMORTIZATION;
+THETA+=dX, PHI+=dY;
+}
+//set model matrix to I4
+mo_matrix[0] = 1, mo_matrix[1] = 0, mo_matrix[2] = 0,
+mo_matrix[3] = 0,
+mo_matrix[4] = 0, mo_matrix[5] = 1, mo_matrix[6] = 0,
+mo_matrix[7] = 0,
+mo_matrix[8] = 0, mo_matrix[9] = 0, mo_matrix[10] = 1,
+mo_matrix[11] = 0,
+mo_matrix[12] = 0, mo_matrix[13] = 0, mo_matrix[14] = 0,
+mo_matrix[15] = 1;
+rotateY(mo_matrix, THETA);
+rotateX(mo_matrix, PHI);
+time_old = time;
+gl.enable(gl.DEPTH_TEST);
+// gl.depthFunc(gl.LEQUAL);
+gl.clearColor(0.5, 0.5, 0.5, 0.9);
+gl.clearDepth(1.0);
+gl.viewport(0.0, 0.0, canvas.width, canvas.height);
+gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+gl.uniformMatrix4fv(_Pmatrix, false, proj_matrix);
+gl.uniformMatrix4fv(_Vmatrix, false, view_matrix);
+gl.uniformMatrix4fv(_Mmatrix, false, mo_matrix);
+gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, index_buffer);
+gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 0);
+window.requestAnimationFrame(animate);
+}
+animate(0);
+</script>
+</body>
+</html>
